@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreyDot - Ultimate Zero-Knowledge Privacy Protocol</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ═══════════════════════════════════════════
+           PREMIUM ULTRA-DARK ARCHITECTURE TOKENS
+        ═══════════════════════════════════════════ */
+        :root {
+            --a: #5c4fff;
+            --a-glow: rgba(92, 79, 255, 0.3);
+            --a-dim: rgba(92, 79, 255, 0.08);
+            --bg-base: #040406;
+            --bg-surface: #0a0a10;
+            --bg-card: #11111a;
+            --border-glow: #1a1a26;
+            --t0: #ffffff;
+            --t1: #e2e8f0;
+            --t2: #94a3b8;
+            --t3: #475569;
+            --online: #10b981;
+            --danger: #ef4444;
+            --warn: #f59e0b;
+            --radius-xl: 24px;
+            --radius-lg: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-base);
+            color: var(--t1);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════════
+           HEADER
+        ═══════════════════════════════════════════ */
+        header {
+            background: rgba(4, 4, 6, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box {
+            width: 38px;
+            height: 34px;
+            background: linear-gradient(135deg, #7c6fff, #4c39ff);
+            border-radius: 10px 10px 10px 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px var(--a-glow);
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            color: var(--t0);
+        }
+
+        .logo-text span {
+            color: var(--a);
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--t2);
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: var(--t0);
+        }
+
+        .btn-nav {
+            background: var(--a);
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: var(--radius-xl);
+            box-shadow: 0 4px 15px var(--a-glow);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-nav:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px var(--a-glow);
+        }
+
+        /* ═══════════════════════════════════════════
+           HERO SECTION
+        ═══════════════════════════════════════════ */
+        .hero {
+            padding: 120px 0 80px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 700px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(92,79,255,0.15) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .sentinel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--a-dim);
+            border: 1px solid rgba(92, 79, 255, 0.2);
+            color: #a59cff;
+            font-weight: 700;
+            font-size: 12px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .sentinel-badge i {
+            color: #00ffcc;
+            animation: pulse 2s infinite;
+        }
+
+        .hero h1 {
+            font-size: 58px;
+            font-weight: 900;
+            color: var(--t0);
+            line-height: 1.15;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, #7c6fff 0%, #00d2ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--t2);
+            max-width: 750px;
+            margin: 0 auto 40px auto;
+        }
+
+        .btn-hero {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffff;
+            color: #050508;
+            text-decoration: none;
+            padding: 18px 44px;
+            font-size: 16px;
+            font-weight: 800;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.08);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .btn-hero:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 255, 255, 0.15);
+            background: #f3f4f6;
+        }
+
+        /* ═══════════════════════════════════════════
+           COMPARISON MATRIX (THE BIG SHOWCASE)
+        ═══════════════════════════════════════════ */
+        .comparison-section {
+            padding: 100px 0;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-glow);
+            border-bottom: 1px solid var(--border-glow);
+        }
+
+        .table-overflow {
+            overflow-x: auto;
+            margin-top: 40px;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            background: var(--bg-card);
+            min-width: 950px;
+        }
+
+        th, td {
+            padding: 22px 28px;
+            border-bottom: 1px solid var(--border-glow);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #0b0b12;
+            color: var(--t0);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.8px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: rgba(255, 255, 255, 0.01);
+        }
+
+        td.greydot-column {
+            background: rgba(92, 79, 255, 0.04);
+            border-left: 2px solid rgba(92, 79, 255, 0.15);
+            border-right: 2px solid rgba(92, 79, 255, 0.15);
+            color: #b4adff;
+            font-weight: 600;
+        }
+
+        th.greydot-header {
+            background: rgba(92, 79, 255, 0.15) !important;
+            color: #ffffff;
+            border-left: 2px solid rgba(92, 79, 255, 0.25);
+            border-right: 2px solid rgba(92, 79, 255, 0.25);
+            font-size: 16px;
+            font-weight: 900;
+            text-align: center;
+        }
+
+        .status-yes {
+            color: var(--online);
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-no {
+            color: var(--danger);
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-partial {
+            color: var(--warn);
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ═══════════════════════════════════════════
+           FEATURES SECTION
+        ═══════════════════════════════════════════ */
+        .features-section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 38px;
+            font-weight: 900;
+            color: var(--t0);
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            color: var(--t2);
+            font-size: 18px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-glow);
+            padding: 40px;
+            border-radius: var(--radius-lg);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--a);
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 52px;
+            height: 52px;
+            background: var(--a-dim);
+            border: 1px solid rgba(92, 79, 255, 0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #a59cff;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--t0);
+            margin-bottom: 12px;
+        }
+
+        /* ═══════════════════════════════════════════
+           ARMOR & FOOTER
+        ═══════════════════════════════════════════ */
+        .lock-box {
+            background: radial-gradient(circle at top left, #12121e 0%, #0a0a10 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: var(--radius-xl);
+            padding: 60px;
+            margin: 60px 0 100px 0;
+        }
+
+        .lock-box h2 {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--t0);
+            margin-bottom: 20px;
+        }
+
+        .armor-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .armor-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: var(--t0);
+        }
+
+        .armor-item i {
+            color: var(--online);
+        }
+
+        .cta-block {
+            padding: 100px 0;
+            text-align: center;
+            border-top: 1px solid var(--border-glow);
+        }
+
+        .cta-block h2 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 16px;
+        }
+
+        footer {
+            background: #040406;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid #14141f;
+            color: var(--t3);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .navbar { flex-direction: column; gap: 20px; }
+            nav { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container navbar">
+            <div class="logo-wrap">
+                <div class="logo-box"><i class="fa-solid fa-comment-dots"></i></div>
+                <div class="logo-text">Grey<span>Dot</span></div>
+            </div>
+            <nav>
+                <a href="#matrix">Comparison Matrix</a>
+                <a href="#features">Features</a>
+                <a href="https://github.com/greydotweb/grd/releases/download/Greydot/Greydot.apk" class="btn-nav">Download APK</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="sentinel-badge"><i class="fa-solid fa-shield-halved"></i> Active Sentinel Shield Armor Enabled</div>
+            <h1>The World's Absolute <br><span>Zero-Knowledge Privacy App.</span></h1>
+            <p>GreyDot is completely customized to operate independently of central logging metrics. Your encryption keys, data sandboxes, and interaction loops belong completely to you.</p>
+            <a href="https://github.com/greydotweb/grd/releases/download/Greydot/Greydot.apk" class="btn-hero" id="downloadTrigger">
+                <i class="fa-solid fa-download"></i> Download Greydot.apk
+            </a>
+        </div>
+    </section>
+
+    <section id="matrix" class="comparison-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>The Ultimate Privacy Breakdown</h2>
+                <p>An exhaustive architectural comparison detailing why GreyDot sits entirely outside traditional corporate tracking ecosystems.</p>
+            </div>
+            <div class="table-overflow">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Security Matrix Parameters</th>
+                            <th class="greydot-header">GreyDot Protocol</th>
+                            <th>WhatsApp Messenger</th>
+                            <th>Telegram App</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Data Storage Layer</strong></td>
+                            <td class="greydot-column">Device Isolation Sandbox (Indexed Dexie Local DB)</td>
+                            <td>Central Cloud Profiles (Meta Data Centers)</td>
+                            <td>Cloud Server Cluster Arrays (Default Chats)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cryptographic Passphrase Mechanics</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> Pure Client-Side (Local PSK Matching Only)</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Server Assigned / Automated Control</td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Server Synchronized Key Elements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Screenshot & Recording Blockers</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> Native Hard System Block Enforcement</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Open Interface (Leaking Permitted)</td>
+                            <td class="status-partial"><i class="fa-solid fa-triangle-exclamation"></i> Only Restrained Inside Secret Chats</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Autonomous Exception Interception</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> AI Sentinel Core Watchdog Protection</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Static Reporting Loops Only</td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Passive Client Error Management</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dynamic Anti-Tamper Countermeasures</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> Live Anti-F12 / DevTools Runtime Freezers</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Relies Blindly on Operating System Stability</td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Vulnerable to Web-Proxy Interceptions</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Account Recovery Method</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> 16-Digit Mnemonic Offline Phrase Code</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Carrier Network SMS OTP Logging</td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Central Account Pin/SMS Sync Loops</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telemetry Ad Profiling Network</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> Hard Zero Profiling Engine Blocks</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Meta Advertising Data Enrichment Engines</td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Embedded Sponsored Content Networks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Contact List Isolation Mechanics</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> Explicit Standalone Usernames (No Ingestion)</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Mandatory Address Book Scraping Routines</td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Complete Address Book Synchronization Loops</td>
+                        </tr>
+                        <tr>
+                            <td><strong>XSS Input Vector Sanitizers</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> Realtime DOM Payload Filter Defenses</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Partial Parsing Filters</td>
+                            <td class="status-partial"><i class="fa-solid fa-triangle-exclamation"></i> Relies heavily on API Sanity Checks</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Decentralized Broadcast Controls</strong></td>
+                            <td class="greydot-column"><span class="status-yes"><i class="fa-solid fa-circle-check"></i> Isolated Community Hub Infrastructure</span></td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Cloud Logged Business Catalog Vectors</td>
+                            <td class="status-no"><i class="fa-solid fa-circle-xmark"></i> Public Server Listed Global Search Logs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Designed for Total Sovereignty</h2>
+                <p>GreyDot leaves no room for corporate observation. Every architectural tier is hardened to isolate your communications.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-shield-cat"></i></div>
+                    <h3>Anti-Cloning Protection</h3>
+                    <p>Browser environments are uniquely validated constantly. If session fingerprints or device contexts are copied by attackers, state arrays instantly clear to preserve your identity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-bug-slash"></i></div>
+                    <h3>Silent Watchdog Audits</h3>
+                    <p>An isolated automated diagnostic model analyzes exception vectors directly inside the environment, protecting thread pipelines without exposing your cleartext conversations.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fa-solid fa-lock"></i></div>
+                    <h3>Local Storage Passphrases</h3>
+                    <p>Shared secret verification elements utilize local hardware storage instances. Keys never migrate to database grids, completely preventing remote structural cracking attempts.</p>
+                </div>
+            </div>
+
+            <div class="lock-box">
+                <h2>Autonomous Environmental Armor Architecture</h2>
+                <p>GreyDot runs an active defensive layer to lock down user data. The app continually tracks your local runtime memory vectors for indicators of debugging or interception. If rogue console alterations or untrusted code attachments are detected, sensitive session data is dropped instantly.</p>
+                <div class="armor-points">
+                    <div class="armor-item"><i class="fa-solid fa-circle-check"></i> Immutable Core State Freezes</div>
+                    <div class="armor-item"><i class="fa-solid fa-circle-check"></i> Realtime Script Injection Filters</div>
+                    <div class="armor-item"><i class="fa-solid fa-circle-check"></i> Hardened Clipboard Protection Layers</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-block">
+        <div class="container">
+            <h2>Experience Complete Data Sovereignty</h2>
+            <p>Step away from permanent data logging frameworks and reclaim your personal privacy parameters.</p>
+            <a href="https://github.com/greydotweb/grd/releases/download/Greydot/Greydot.apk" class="btn-hero">
+                <i class="fa-solid fa-shield-halved"></i> Get GreyDot APK Now
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 GreyDot Ecosystem. Engineered cleanly for authentic human privacy.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Secure Initializer verification log
+        document.getElementById('downloadTrigger').addEventListener('click', function() {
+            console.log("[GreyDot Armor] Verified secure signature download pipeline handshake initiated.");
+        });
+    </script>
+</body>
+</html>
