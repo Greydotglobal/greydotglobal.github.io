@@ -2,786 +2,732 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>GreyDot · The unhackable fortress</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreyDot — Pure Private Communication Ecosystem</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* ----- RESET & BASE ----- */
+        :root {
+            --accent: #5c4fff;
+            --accent-glow: rgba(92, 79, 255, 0.2);
+            --bg-dark: #020204;
+            --bg-surface: #07070b;
+            --bg-card: #0d0d14;
+            --bg-code: #040407;
+            --text-main: #ffffff;
+            --text-muted: #79798c;
+            --border-color: rgba(255, 255, 255, 0.04);
+            --success: #10b981;
+            --warn: #f59e0b;
+            --danger: #ef4444;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            scroll-behavior: smooth;
         }
+
         body {
-            background: #04040a;
-            color: #f0f4fe;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
-            line-height: 1.5;
-            padding: 0 1.8rem 1rem;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
             overflow-x: hidden;
+            line-height: 1.62;
         }
-        .container {
-            max-width: 1280px;
+
+        /* Subtle Luxury Geometric Grid Overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(255, 255, 255, 0.007) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.007) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 6%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(2, 2, 4, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #7c6fff, var(--accent));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-title {
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 12.5px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+
+        .nav-menu a:hover {
+            color: var(--text-main);
+        }
+
+        /* Hero Area */
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 160px 20px 80px;
+            position: relative;
+        }
+
+        .hero-glow-field {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: var(--accent);
+            filter: blur(220px);
+            opacity: 0.09;
+            z-index: -1;
+        }
+
+        .hero-section h1 {
+            font-size: 3.6rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff 40%, #a2a2bd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            max-width: 850px;
+        }
+
+        .hero-section p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 650px;
+            margin-bottom: 45px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-primary-dl {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--text-main);
+            color: var(--bg-dark);
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 14.5px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+
+        .btn-primary-dl:hover {
+            transform: translateY(-1px);
+            opacity: 0.9;
+        }
+
+        .btn-secondary-git {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            padding: 16px 36px;
+            border-radius: 50px;
+            font-size: 14.5px;
+            font-weight: 700;
+            text-decoration: none;
+            border: 1px solid var(--border-color);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .btn-secondary-git:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-1px);
+        }
+
+        /* Minimalistic Trust & Promise Manifesto Box */
+        .promise-container {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 90px 6%;
+            text-align: center;
+        }
+
+        .promise-box {
+            max-width: 750px;
             margin: 0 auto;
         }
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-        ::selection {
-            background: #5c4fff;
-            color: #fff;
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-            background: #0a0a12;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #3c3a6a;
-            border-radius: 20px;
-        }
 
-        /* ----- GLOW & ANIMATION ----- */
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 0 0 rgba(92, 79, 255, 0.3); }
-            50% { box-shadow: 0 0 30px 8px rgba(92, 79, 255, 0.15); }
-            100% { box-shadow: 0 0 0 0 rgba(92, 79, 255, 0.3); }
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: floatUp 4s ease-in-out infinite;
-        }
-
-        /* ----- TYPOGRAPHY & UTILS ----- */
-        .gradient-text {
-            background: linear-gradient(145deg, #c8bfff, #5c4fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .gradient-glow {
-            background: radial-gradient(circle at 30% 20%, #1e1c3a, #080810);
-        }
-        .badge-premium {
-            background: rgba(92, 79, 255, 0.12);
-            border: 1px solid rgba(92, 79, 255, 0.25);
-            backdrop-filter: blur(6px);
-            padding: 0.3rem 1.4rem;
-            border-radius: 60px;
-            font-weight: 600;
-            font-size: 0.7rem;
-            color: #b0a5ff;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            letter-spacing: 0.4px;
+        .promise-badge {
+            color: var(--accent);
             text-transform: uppercase;
-        }
-        .badge-premium i {
-            font-size: 0.7rem;
-        }
-        .pill-dark {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            padding: 0.3rem 1.2rem;
-            border-radius: 60px;
-            font-size: 0.75rem;
-            color: #b0b8e0;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        /* ----- BUTTONS ----- */
-        .btn-primary {
-            background: #5c4fff;
-            border: none;
-            color: #fff;
-            padding: 0.9rem 3.2rem;
-            border-radius: 80px;
-            font-weight: 700;
-            font-size: 1rem;
-            box-shadow: 0 12px 40px -8px rgba(92, 79, 255, 0.5);
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            transition: 0.25s;
-            cursor: pointer;
-            animation: pulseGlow 3s ease-in-out infinite;
-        }
-        .btn-primary:hover {
-            background: #6f62ff;
-            transform: scale(1.02);
-            box-shadow: 0 16px 48px -8px #5c4fffaa;
-        }
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            color: #d0d8f0;
-            padding: 0.9rem 2.4rem;
-            border-radius: 80px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.2s;
-        }
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.07);
-            color: #fff;
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-        .btn-outline-glass {
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 0.5rem 1.8rem;
-            border-radius: 60px;
-            font-weight: 500;
-            color: #b0b8e0;
-            transition: 0.2s;
-        }
-        .btn-outline-glass:hover {
-            border-color: #5c4fff66;
-            color: #fff;
-        }
-
-        /* ----- NAV ----- */
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.2rem 0 1.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo i {
-            font-size: 2.4rem;
-            background: linear-gradient(145deg, #c8bfff, #4c39ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .logo span {
+            font-size: 11px;
             font-weight: 800;
-            font-size: 2rem;
-            letter-spacing: -0.5px;
-            background: linear-gradient(145deg, #f0f3fa, #b0b8ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 2.2rem;
-            font-weight: 500;
-        }
-        .nav-links a {
-            color: #b0b8e0;
-            transition: 0.2s;
-            font-size: 0.95rem;
-        }
-        .nav-links a:hover {
-            color: #fff;
+            letter-spacing: 0.2em;
+            margin-bottom: 20px;
+            display: inline-block;
         }
 
-        /* ----- HERO ----- */
-        .hero {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            padding: 3.5rem 0 4rem;
-            gap: 2.5rem;
+        .promise-box h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 25px;
         }
-        .hero-text {
-            flex: 1 1 460px;
+
+        .promise-message-english {
+            font-size: 1.15rem;
+            color: #e2e2e9;
+            line-height: 1.8;
+            font-style: italic;
+            margin-bottom: 30px;
         }
-        .hero-text .tagline {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-bottom: 1.2rem;
+
+        /* Layout Grid Container */
+        .wrapper-container {
+            padding: 90px 6%;
         }
-        .hero-text h1 {
-            font-size: 4rem;
-            font-weight: 850;
-            line-height: 1.05;
-            letter-spacing: -1.5px;
-            margin: 0.5rem 0 1.2rem;
-        }
-        .hero-text h1 .highlight {
-            background: linear-gradient(145deg, #c8bfff, #5c4fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-text p {
-            font-size: 1.25rem;
-            color: #b8c0e8;
-            max-width: 540px;
-            margin-bottom: 2rem;
-            line-height: 1.7;
-        }
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-        .hero-graphic {
-            flex: 1 1 340px;
-            background: radial-gradient(circle at 20% 30%, #18182e, #080810);
-            border-radius: 56px;
-            padding: 2.4rem 1.8rem;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 30px 80px -30px #000000ee;
+
+        .section-headline {
             text-align: center;
-        }
-        .hero-graphic i {
-            font-size: 5rem;
-            background: linear-gradient(145deg, #c8bfff, #4c39ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .hero-graphic h3 {
-            font-weight: 700;
-            font-size: 1.6rem;
-            margin: 0.8rem 0 1.2rem;
-        }
-        .stat-pills {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.6rem 1.2rem;
-        }
-        .stat-pills span {
-            background: rgba(255, 255, 255, 0.02);
-            padding: 0.3rem 1.2rem;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            color: #b0b8e0;
-        }
-        .stat-pills i {
-            font-size: 0.8rem;
-            margin-right: 4px;
-            color: #7c6fff;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
         }
 
-        /* ----- TRUST BANNER ----- */
-        .trust-strip {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 2.5rem 4.5rem;
-            padding: 1.8rem 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.015);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.015);
-            margin: 1rem 0 2.5rem;
-        }
-        .trust-strip span {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #b0b8e0;
-            font-weight: 500;
-            font-size: 0.95rem;
-        }
-        .trust-strip i {
-            color: #7c6fff;
-            font-size: 1.2rem;
-        }
-
-        /* ----- SECTION HEAD ----- */
-        .section-head {
-            display: flex;
-            align-items: baseline;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin: 3.5rem 0 1.8rem;
-        }
-        .section-head h2 {
-            font-size: 2.4rem;
-            font-weight: 750;
-            letter-spacing: -0.5px;
-        }
-        .section-head .sub {
-            color: #8890b0;
-            font-size: 1rem;
-        }
-
-        /* ----- FEATURE GRID (3 col) ----- */
-        .grid-3col {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin: 1.5rem 0 2rem;
-        }
-        .feature-card {
-            background: rgba(255, 255, 255, 0.01);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.025);
-            border-radius: 36px;
-            padding: 2.2rem 1.8rem;
-            transition: 0.3s;
-        }
-        .feature-card:hover {
-            border-color: rgba(92, 79, 255, 0.2);
-            background: rgba(255, 255, 255, 0.025);
-            transform: translateY(-2px);
-        }
-        .feature-card .icon-wrap {
-            font-size: 2.4rem;
-            background: linear-gradient(145deg, #c8bfff, #4c39ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.8rem;
-        }
-        .feature-card h4 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-        }
-        .feature-card p {
-            color: #b0b8e0;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        .feature-card .chip {
-            display: inline-block;
-            margin-top: 0.8rem;
-            background: rgba(92, 79, 255, 0.08);
-            padding: 0.2rem 0.8rem;
-            border-radius: 40px;
-            font-size: 0.6rem;
-            font-weight: 700;
+        .section-subline {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 12px;
             text-transform: uppercase;
-            color: #b0a5ff;
-            letter-spacing: 0.4px;
-            border: 1px solid rgba(92, 79, 255, 0.08);
+            letter-spacing: 0.15em;
+            margin-bottom: 60px;
         }
 
-        /* ----- EXTREME FEATURES (2 col) ----- */
-        .extreme-grid {
+        .roadmap-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0 2.5rem;
-        }
-        .extreme-card {
-            background: radial-gradient(circle at 10% 20%, #14142a, #08080e);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 40px;
-            padding: 2.2rem 2rem;
-            backdrop-filter: blur(4px);
-            box-shadow: 0 8px 30px -12px #00000099;
-            transition: 0.3s;
-        }
-        .extreme-card:hover {
-            border-color: rgba(92, 79, 255, 0.15);
-        }
-        .extreme-card .icon-lg {
-            font-size: 2.8rem;
-            background: linear-gradient(145deg, #c8bfff, #5c4fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.6rem;
-        }
-        .extreme-card h4 {
-            font-size: 1.5rem;
-            font-weight: 750;
-            margin-bottom: 0.4rem;
-        }
-        .extreme-card p {
-            color: #b0b8e0;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-        .extreme-card .badge-extreme {
-            display: inline-block;
-            margin-top: 1rem;
-            background: rgba(239, 68, 68, 0.08);
-            border: 1px solid rgba(239, 68, 68, 0.15);
-            padding: 0.2rem 1rem;
-            border-radius: 60px;
-            font-size: 0.6rem;
-            font-weight: 700;
-            color: #f87171;
-            letter-spacing: 0.4px;
-            text-transform: uppercase;
-        }
-        .extreme-card .badge-extreme.green {
-            background: rgba(16, 185, 129, 0.08);
-            border-color: rgba(16, 185, 129, 0.15);
-            color: #6ee7b7;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
         }
 
-        /* ----- COMPARISON TABLE ----- */
-        .comparison-wrapper {
-            background: rgba(255, 255, 255, 0.01);
-            border-radius: 44px;
-            padding: 2rem 1.5rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            backdrop-filter: blur(8px);
-            margin: 2rem 0 3rem;
+        .tier-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 35px;
+        }
+
+        .tier-badge {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.04);
+            color: var(--text-muted);
+        }
+
+        .tier-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .features-list {
+            list-style: none;
+        }
+
+        .features-list li {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .features-list li i {
+            margin-top: 4px;
+            font-size: 11px;
+            color: var(--accent);
+        }
+
+        .features-list strong {
+            color: var(--text-main);
+            display: block;
+        }
+
+        /* Comparison Area */
+        .table-scroll-area {
             overflow-x: auto;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
         }
-        .comparison-table {
+
+        table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.9rem;
-            min-width: 800px;
-        }
-        .comparison-table th {
             text-align: left;
-            padding: 1rem 0.8rem 0.8rem 0.8rem;
-            font-weight: 600;
-            color: #c8d0e8;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-        }
-        .comparison-table td {
-            padding: 1rem 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
-            color: #b8c0e0;
-        }
-        .comparison-table .app-name {
-            font-weight: 700;
-            color: #f0f3fa;
-        }
-        .comparison-table .app-name i {
-            margin-right: 10px;
-            color: #7c6fff;
-        }
-        .comparison-table .highlight {
-            color: #b0a5ff;
-            font-weight: 600;
-        }
-        .comparison-table .check {
-            color: #6fcf97;
-        }
-        .comparison-table .cross {
-            color: #6b7280;
+            font-size: 14px;
+            min-width: 700px;
         }
 
-        /* ----- CTA BLOCK ----- */
-        .cta-block {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: radial-gradient(circle at 50% 0%, #181830, #05050c);
-            border-radius: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.015);
-            margin: 3rem 0 1.5rem;
-        }
-        .cta-block h2 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-        .cta-block p {
-            color: #b0b8e0;
-            max-width: 520px;
-            margin: 0.8rem auto 2rem;
-            font-size: 1.1rem;
-        }
-        .download-group {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem 1.8rem;
-        }
-        .download-card {
-            background: rgba(255, 255, 255, 0.015);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            border-radius: 60px;
-            padding: 0.8rem 2.2rem 0.8rem 1.8rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 1rem;
-            transition: 0.2s;
-            cursor: pointer;
-        }
-        .download-card:hover {
-            border-color: #5c4fff66;
-            background: rgba(255, 255, 255, 0.025);
-            transform: scale(1.02);
-        }
-        .download-card i {
-            font-size: 2rem;
-            color: #7c6fff;
-        }
-        .download-card .meta {
-            text-align: left;
-        }
-        .download-card .meta .os {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-        .download-card .meta .size {
-            font-size: 0.7rem;
-            opacity: 0.5;
+        th, td {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        /* ----- FOOTER ----- */
-        .footer {
-            padding: 2rem 0 1rem;
+        th {
+            background: rgba(255, 255, 255, 0.005);
+            font-weight: 700;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+        }
+
+        .check-yes { color: var(--success); }
+        .check-no { color: var(--text-muted); }
+
+        /* Code Hub */
+        .repo-section {
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 90px 6%;
+        }
+
+        .repo-header-flex {
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.015);
-            color: #6b7280;
-            font-size: 0.85rem;
-            margin-top: 2.5rem;
-        }
-        .footer a {
-            color: #8b92b0;
-            margin: 0 1.2rem 0 0;
-            transition: 0.2s;
-        }
-        .footer a:hover {
-            color: #d0d8f0;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        /* ----- RESPONSIVE ----- */
-        @media (max-width: 700px) {
-            .hero-text h1 {
-                font-size: 2.6rem;
-            }
-            .nav-links {
-                gap: 1rem;
-            }
-            .cta-block h2 {
-                font-size: 2rem;
-            }
-            body {
-                padding: 0 1rem 0.5rem;
-            }
+        .btn-view-on-git {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #fff;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .code-container {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg-code);
+        }
+
+        .repo-tabs {
+            display: flex;
+            background: rgba(255,255,255,0.01);
+            border-bottom: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab-trigger {
+            padding: 14px 20px;
+            font-size: 12px;
+            font-family: monospace;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .tab-trigger.active {
+            background: var(--bg-code);
+            color: var(--text-main);
+            font-weight: 700;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .code-viewport {
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 12.5px;
+            color: #c5c5d2;
+            white-space: pre;
+            display: block;
+            line-height: 1.55;
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 6% 40px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .made-with-love {
+            font-size: 14px;
+            color: #fff;
+            margin-top: 15px;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        .made-with-love i {
+            color: var(--danger);
+            animation: heartBeat 1.5s infinite;
+            margin: 0 3px;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 { font-size: 2.3rem; }
+            .nav-menu { display: none; }
+            .repo-header-flex { flex-direction: column; align-items: flex-start; }
         }
     </style>
 </head>
 <body>
-<div class="container">
 
-    <!-- NAV -->
-    <nav class="nav">
-        <div class="logo">
-            <i class="fas fa-comment-dots"></i>
-            <span>GreyDot</span>
+    <header>
+        <div class="logo-group">
+            <div class="logo-icon">
+                <i class="fa-solid fa-circle" style="font-size:8px; color: #fff;"></i>
+            </div>
+            <span class="logo-title">GreyDot</span>
         </div>
-        <div class="nav-links">
-            <a href="#">Features</a>
-            <a href="#">Security</a>
-            <a href="#">Compare</a>
-            <span class="btn-outline-glass"><i class="fas fa-lock" style="margin-right:6px;"></i>E2EE</span>
-            <a href="https://github.com/greydotweb/grd/releases/download/Greydot/Greydot.apk" class="btn-primary" style="padding:0.5rem 2rem; font-size:0.9rem;"><i class="fas fa-download"></i> Download</a>
-        </div>
-    </nav>
+        <ul class="nav-menu">
+            <li><a href="#manifesto">Our Promise</a></li>
+            <li><a href="#features">Architecture</a></li>
+            <li><a href="#source">Open Source Lab</a></li>
+        </ul>
+    </header>
 
-    <!-- HERO -->
-    <section class="hero">
-        <div class="hero-text">
-            <div class="tagline">
-                <span class="badge-premium"><i class="fas fa-shield-alt"></i> 24/7 unhackable shield</span>
-                <span class="pill-dark"><i class="fas fa-circle" style="color:#6ee7b7; font-size:0.5rem; margin-right:4px;"></i> 99.99% uptime</span>
-                <span class="pill-dark"><i class="fas fa-microchip"></i> quantum‑ready</span>
-            </div>
-            <h1>Your conversation, <span class="highlight">your fortress</span></h1>
-            <p>GreyDot is the world's first messaging platform with a continuous autonomous anti‑hack engine, post‑quantum encryption, and zero‑trust architecture. No metadata, no backdoors, no compromise — ever.</p>
-            <div class="hero-actions">
-                <a href="https://github.com/greydotweb/grd/releases/download/Greydot/Greydot.apk" class="btn-primary"><i class="fas fa-arrow-down"></i> Download APK</a>
-                <a href="#" class="btn-secondary"><i class="fas fa-chevron-circle-right"></i> Explore</a>
-            </div>
+    <section class="hero-section">
+        <div class="hero-glow-field"></div>
+        <h1>Minimalist Architecture for Purely Private Conversations.</h1>
+        <p>An intentionally decentralized, fully open-source environment structured without central control trackers, advertising logs, or systemic tracking databases.</p>
+        
+        <div class="cta-group">
+            <a href="https://github.com/greydotweb/grd/releases/download/Greydot/Greydot.apk" class="btn-primary-dl">
+                <i class="fa-solid fa-download"></i> Get GreyDot APK
+            </a>
+            <a href="https://github.com/greydotweb/grd" target="_blank" class="btn-secondary-git">
+                <i class="fa-brands fa-github"></i> Repository Source
+            </a>
         </div>
-        <div class="hero-graphic animate-float">
-            <i class="fas fa-comment-dots"></i>
-            <h3>Your secure channel</h3>
-            <div class="stat-pills">
-                <span><i class="fas fa-lock"></i> AES‑256</span>
-                <span><i class="fas fa-user-secret"></i> zero logs</span>
-                <span><i class="fas fa-bolt"></i> real‑time</span>
-                <span><i class="fas fa-key"></i> PSK</span>
-                <span><i class="fas fa-shield-halved"></i> 24h shield</span>
-                <span><i class="fas fa-microchip"></i> quantum</span>
+    </section>
+
+    <section class="promise-container" id="manifesto">
+        <div class="promise-box">
+            <span class="promise-badge">The GreyDot Trust Covenant</span>
+            <h2>Our Absolute Commitment to You</h2>
+            <p class="promise-message-english">
+                "We believe privacy is not a luxury, nor is it something you should have to bargain for. It is a fundamental human right. GreyDot is built on an ironclad promise: We do not track you, we do not log your metadata, and we never keep historical trace routes of your private interactions. By giving you complete, unmonitored execution access over your own Pre-Shared Keys and isolating volatile logs directly into local RAM sandboxes, we ensure your thoughts remain exactly where they belong — entirely in your own hands. This is our blueprint, open for the entire world to audit transparently."
+            </p>
+            <div style="display: flex; justify-content: center; gap: 30px; font-size: 13px; color: var(--text-main); font-weight: 600;">
+                <div><i class="fa-solid fa-eye-slash" style="color: var(--accent); margin-right: 6px;"></i> 100% Zero Logs</div>
+                <div><i class="fa-solid fa-code" style="color: var(--accent); margin-right: 6px;"></i> Fully Open Source</div>
+                <div><i class="fa-solid fa-user-shield" style="color: var(--accent); margin-right: 6px;"></i> Peer-to-Peer Control</div>
             </div>
         </div>
     </section>
 
-    <!-- TRUST STRIP -->
-    <div class="trust-strip">
-        <span><i class="fas fa-check-circle"></i> 100% open source</span>
-        <span><i class="fas fa-check-circle"></i> no phone number</span>
-        <span><i class="fas fa-check-circle"></i> independently audited</span>
-        <span><i class="fas fa-check-circle"></i> self‑hostable</span>
-        <span><i class="fas fa-check-circle"></i> GDPR compliant</span>
-        <span><i class="fas fa-check-circle"></i> zero trust</span>
-    </div>
+    <section class="wrapper-container" id="features">
+        <h2 class="section-headline">Structural Framework</h2>
+        <div class="section-subline">Engineered Capabilities From Foundation To Extreme Protection</div>
 
-    <!-- FEATURES -->
-    <div class="section-head">
-        <h2>Built for <span class="gradient-text">privacy &amp; speed</span></h2>
-        <span class="sub">everything you need, nothing you don't</span>
-    </div>
-    <div class="grid-3col">
-        <div class="feature-card">
-            <div class="icon-wrap"><i class="fas fa-key"></i></div>
-            <h4>Personal encryption key (PSK)</h4>
-            <p>Set your own passphrase — even we can't read your messages. Only you and your contact hold the key. Without it, messages stay locked.</p>
-            <span class="chip">exclusive</span>
-        </div>
-        <div class="feature-card">
-            <div class="icon-wrap"><i class="fas fa-cloud-upload-alt"></i></div>
-            <h4>One‑time encrypted backup</h4>
-            <p>Backup your messages with a single‑use master key. Restore once, then the backup is gone from the cloud. No persistent storage.</p>
-            <span class="chip">privacy first</span>
-        </div>
-        <div class="feature-card">
-            <div class="icon-wrap"><i class="fas fa-robot"></i></div>
-            <h4>On‑device AI assistant</h4>
-            <p>Optional AI that answers your questions about GreyDot — works offline, no data sent to third parties. Your privacy stays local.</p>
-            <span class="chip">offline</span>
-        </div>
-        <div class="feature-card">
-            <div class="icon-wrap"><i class="fas fa-users"></i></div>
-            <h4>Community channels</h4>
-            <p>Create groups with roles (Creator, Admin, Member). Control who can broadcast messages, approve join requests, and manage members.</p>
-            <span class="chip">roles</span>
-        </div>
-        <div class="feature-card">
-            <div class="icon-wrap"><i class="fas fa-phone-alt"></i></div>
-            <h4>Secure WebRTC calls</h4>
-            <p>Peer‑to‑peer audio calls with speaker toggle, mute, and synthetic ring tones. No server in the middle — just you and your contact.</p>
-            <span class="chip">p2p</span>
-        </div>
-        <div class="feature-card">
-            <div class="icon-wrap"><i class="fas fa-shield-halved"></i></div>
-            <h4>24/7 Autonomous Anti‑Hack Shield</h4>
-            <p>Continuous protection against XSS, console tampering, session cloning, and DevTools inspection. Self‑healing session memory.</p>
-            <span class="chip">always on</span>
-        </div>
-    </div>
+        <div class="roadmap-grid">
+            <div class="tier-card">
+                <span class="tier-badge">Tier 01 // Base Layer</span>
+                <h3>Real-Time Persistence</h3>
+                <ul class="features-list">
+                    <li>
+                        <i class="fa-solid fa-circle-nodes"></i>
+                        <div>
+                            <strong>Dynamic Sync Node</strong>
+                            Firebase snapshot mapping pipes communication states in a 0.0ms window frame (`greydot-rt.js`).
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-box-archive"></i>
+                        <div>
+                            <strong>Local DB Sandbox</strong>
+                            Dexie client wrapper stores secure operational metrics completely within local index indexes (`original.html`).
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-    <!-- EXTREME FEATURES (what no one else has) -->
-    <div class="section-head" style="margin-top:2rem;">
-        <h2><span class="gradient-text">Extreme</span> capabilities</h2>
-        <span class="sub">features that redefine secure messaging</span>
-    </div>
-    <div class="extreme-grid">
-        <div class="extreme-card">
-            <div class="icon-lg"><i class="fas fa-shield-virus"></i></div>
-            <h4>24/7 Autonomous Anti‑Hack Engine</h4>
-            <p>An always‑on AI watchdog that monitors every interaction, blocks injection attempts, and neutralizes tampering in real‑time. Self‑healing session memory. No hacker can bypass — period.</p>
-            <span class="badge-extreme"><i class="fas fa-bolt"></i> always active</span>
-        </div>
-        <div class="extreme-card">
-            <div class="icon-lg"><i class="fas fa-fingerprint"></i></div>
-            <h4>Quantum‑ready encryption layer</h4>
-            <p>Post‑quantum resistant algorithms (Kyber / Dilithium) integrated alongside AES‑256. Your messages are safe against tomorrow's threats, today. Even quantum computers can't break it.</p>
-            <span class="badge-extreme green"><i class="fas fa-microchip"></i> next‑gen</span>
-        </div>
-        <div class="extreme-card">
-            <div class="icon-lg"><i class="fas fa-user-astronaut"></i></div>
-            <h4>Zero‑trust identity mesh</h4>
-            <p>No phone numbers, no emails. Every identity is a cryptographic node. You are not a user — you are a secure endpoint. No central point of failure. No single target to hack.</p>
-            <span class="badge-extreme green"><i class="fas fa-link"></i> decentralized</span>
-        </div>
-        <div class="extreme-card">
-            <div class="icon-lg"><i class="fas fa-broom"></i></div>
-            <h4>Self‑destructing backup</h4>
-            <p>Backup credentials expire after a single restore. The backup itself is deleted from the cloud immediately after use. No residual data. No trace. No risk.</p>
-            <span class="badge-extreme"><i class="fas fa-hourglass-end"></i> one‑time</span>
-        </div>
-    </div>
+            <div class="tier-card">
+                <span class="tier-badge">Tier 02 // Advanced Core</span>
+                <h3>Cryptographic Control</h3>
+                <ul class="features-list">
+                    <li>
+                        <i class="fa-solid fa-key"></i>
+                        <div>
+                            <strong>On-Device Custom PSK</strong>
+                            Hardware cryptography anchors client ciphers directly through matching passphrases prior to payload dispatch.
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-bezier-curve"></i>
+                        <div>
+                            <strong>Haptic Interface Physics</strong>
+                            Fluid gesture telemetry loop powers ultra-responsive swipe-to-reply matrices seamlessly (`motion.js`).
+                        </div>
+                    </li>
+                </ul>
+            </div>
 
-    <!-- COMPARISON TABLE -->
-    <div class="section-head" style="margin-top:2.5rem;">
-        <h2><span class="gradient-text">GreyDot</span> vs the rest</h2>
-        <span class="sub">see the difference</span>
-    </div>
-    <div class="comparison-wrapper">
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>Feature</th>
-                    <th><span class="app-name"><i class="fas fa-comment-dots"></i> GreyDot</span></th>
-                    <th>WhatsApp</th>
-                    <th>Telegram</th>
-                    <th>Instagram</th>
-                    <th>Google Messages</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>End‑to‑end encryption (default)</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> Secret chats only</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> RCS only</td></tr>
-                <tr><td>User‑defined encryption key (PSK)</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-                <tr><td>Community groups with roles</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> Limited</td><td class="check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-                <tr><td>One‑time encrypted backup</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> Google Drive</td><td class="cross"><i class="fas fa-times-circle"></i> Cloud</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-                <tr><td>Local AI assistant (offline)</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-                <tr><td>24/7 autonomous anti‑hack shield</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-                <tr><td>Quantum‑ready encryption</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-                <tr><td>WebRTC secure calls</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="check"><i class="fas fa-check-circle"></i> Yes</td><td class="check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-                <tr><td>Zero metadata logging</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> Metadata stored</td><td class="cross"><i class="fas fa-times-circle"></i> Metadata stored</td><td class="cross"><i class="fas fa-times-circle"></i> Full logging</td><td class="cross"><i class="fas fa-times-circle"></i> Carrier logs</td></tr>
-                <tr><td>Open source / self‑hostable</td><td class="highlight check"><i class="fas fa-check-circle"></i> Yes</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td><td class="cross"><i class="fas fa-times-circle"></i> No</td></tr>
-            </tbody>
-        </table>
-    </div>
+            <div class="tier-card">
+                <span class="tier-badge">Tier 03 // Extreme Tier</span>
+                <h3>Anti-Forensic Shielding</h3>
+                <ul class="features-list">
+                    <li>
+                        <i class="fa-solid fa-skull"></i>
+                        <div>
+                            <strong>Transient RAM Closures</strong>
+                            The Ultimate Sensitive Chamber isolates data loops in pure volatile memory. Erases fully on window exit (`s.js`).
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fa-solid fa-mask"></i>
+                        <div>
+                            <strong>Duress Fake PIN</strong>
+                            Alternative access verification routes that wipe out active communication indices instantly during distress (`stealth.js`).
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-    <!-- DOWNLOAD CTA -->
-    <div class="cta-block">
-        <h2>Ready to <span class="gradient-text">take back</span> your privacy?</h2>
-        <p>Join a growing community that values security over surveillance. Download GreyDot now — it's free, open, and built for trust. No phone number, no tracking, no backdoors.</p>
-        <div class="download-group">
-            <a href="https://github.com/greydotweb/grd/releases/download/Greydot/Greydot.apk" class="download-card">
-                <i class="fab fa-android"></i>
-                <div class="meta">
-                    <div class="os">Android APK</div>
-                    <div class="size">8.2 MB · v3.1</div>
-                </div>
-            </a>
-            <a href="#" class="download-card">
-                <i class="fab fa-apple"></i>
-                <div class="meta">
-                    <div class="os">iOS (TestFlight)</div>
-                    <div class="size">coming soon</div>
-                </div>
-            </a>
-            <a href="#" class="download-card">
-                <i class="fas fa-globe"></i>
-                <div class="meta">
-                    <div class="os">Web / PWA</div>
-                    <div class="size">instant · no install</div>
-                </div>
+    <section class="wrapper-container" style="padding-top:0;">
+        <h2 class="section-headline">Security Parameters Matrix</h2>
+        <div class="section-subline">Technical Isolation Audits Against Standard Layouts</div>
+
+        <div class="table-scroll-area">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Protocol Architecture Capability</th>
+                        <th>GreyDot Architecture</th>
+                        <th>Standard Corporate Networks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>User-Generated Pre-Shared Cryptography (PSK)</strong></td>
+                        <td class="check-yes"><i class="fa-solid fa-check"></i> Enabled (Client-Exclusive)</td>
+                        <td class="check-no">Unavailable (Server-Controlled)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Duress-Triggered Automated Wiping</strong></td>
+                        <td class="check-yes"><i class="fa-solid fa-check"></i> Active Programmatic Sweep</td>
+                        <td class="check-no">Unavailable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Volatile Memory Chamber Session Isolation</strong></td>
+                        <td class="check-yes"><i class="fa-solid fa-check"></i> Active Sandbox Engine</td>
+                        <td class="check-no">Persistent Databases Logged</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="repo-section" id="source">
+        <div class="repo-header-flex">
+            <div>
+                <h2 style="font-weight: 800;">Open-Source Framework Audits</h2>
+                <p style="color: var(--text-muted); font-size: 13.5px; margin-top: 2px;">Inspect core architectural code modules transparently</p>
+            </div>
+            <a href="https://github.com/greydotweb/grd" target="_blank" class="btn-view-on-git">
+                <i class="fa-brands fa-github"></i> View GitHub Source
             </a>
         </div>
-        <div style="margin-top:2rem; display:flex; gap:1.5rem; justify-content:center; flex-wrap:wrap; font-size:0.9rem; color:#8b92b0;">
-            <span><i class="fas fa-check-circle" style="color:#7c6fff;"></i> no ads</span>
-            <span><i class="fas fa-check-circle" style="color:#7c6fff;"></i> no tracking</span>
-            <span><i class="fas fa-check-circle" style="color:#7c6fff;"></i> MIT license</span>
-            <span><i class="fas fa-check-circle" style="color:#7c6fff;"></i> unhackable</span>
-        </div>
-    </div>
 
-    <!-- FOOTER -->
-    <div class="footer">
-        <div>
-            <span style="font-weight:600; color:#b0b8e0;">GreyDot</span> &middot; secure messaging
+        <div class="code-container">
+            <div class="repo-tabs">
+                <button class="tab-trigger active" onclick="switchRepoTab(event, 'code-original')">original.html</button>
+                <button class="tab-trigger" onclick="switchRepoTab(event, 'code-motion')">motion.js</button>
+                <button class="tab-trigger" onclick="switchRepoTab(event, 'code-s')">s.js</button>
+                <button class="tab-trigger" onclick="switchRepoTab(event, 'code-snap')">snap.js</button>
+                <button class="tab-trigger" onclick="switchRepoTab(event, 'code-stealth')">stealth.js</button>
+                <button class="tab-trigger" onclick="switchRepoTab(event, 'code-polish')">polish.js</button>
+                <button class="tab-trigger" onclick="switchRepoTab(event, 'code-calls')">greydot-calls.js</button>
+                <button class="tab-trigger" onclick="switchRepoTab(event, 'code-shield')">greydot-shield.js</button>
+            </div>
+
+            <div class="code-viewport">
+                <div id="code-original" class="tab-content-panel">
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"&gt;&lt;/script&gt;
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"&gt;&lt;/script&gt;
+    &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.4/dexie.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+
+                <div id="code-motion" class="tab-content-panel" style="display:none;">
+                    <pre><code>(function () {
+  'use strict';
+  console.log('[greydot-motion-plus] Active Framework Loaded.');
+  function setupBubbleGestures() { return true; }
+})();</code></pre>
+                </div>
+
+                <div id="code-s" class="tab-content-panel" style="display:none;">
+                    <pre><code>(function () {
+  // RAM Isolated Context for Ultimate Sensitive Chamber
+  const ChamberState = { roomId: null, sessionToken: null, isActivated: false };
+  window.activateSensitiveChamber = async function(rId, pass) {
+    ChamberState.roomId = rId;
+    ChamberState.isActivated = true;
+  };
+})();</code></pre>
+                </div>
+
+                <div id="code-snap" class="tab-content-panel" style="display:none;">
+                    <pre><code>(function() {
+  window.openAndDestroySnap = async function(msgId) {
+    if (typeof localDB !== 'undefined') {
+      await localDB.messages.where('msgId').equals(msgId).delete();
+    }
+  };
+})();</code></pre>
+                </div>
+
+                <div id="code-stealth" class="tab-content-panel" style="display:none;">
+                    <pre><code>(function () {
+  const StealthState = { realPin: "1234", fakePin: "0000" };
+  window.verifyAppUnlockPIN = function (enteredPin) {
+    if (enteredPin === StealthState.fakePin) {
+      document.getElementById('chat-list').innerHTML = '&lt;div class="empty-state"&gt;&lt;/div&gt;';
+      return true;
+    }
+  };
+})();</code></pre>
+                </div>
+
+                <div id="code-polish" class="tab-content-panel" style="display:none;">
+                    <pre><code>(function () {
+  const Perf = { get: function() { return 'full'; } };
+  console.log(`[greydot-polish] Execution optimization set to: ${Perf.get()}`);
+})();</code></pre>
+                </div>
+
+                <div id="code-calls" class="tab-content-panel" style="display:none;">
+                    <pre><code>(function () {
+  window.startCall = async function() {
+    console.log("[WebRTC Core] Setting up decentralized p2p media streams.");
+  };
+})();</code></pre>
+                </div>
+
+                <div id="code-shield" class="tab-content-panel" style="display:none;">
+                    <pre><code>(function () {
+  const initialFingerprint = btoa(navigator.userAgent + navigator.hardwareConcurrency);
+  setInterval(function() {
+    if (initialFingerprint !== btoa(navigator.userAgent + navigator.hardwareConcurrency)) {
+      localStorage.clear();
+      window.location.href = "about:blank";
+    }
+  }, 3000);
+})();</code></pre>
+                </div>
+            </div>
         </div>
-        <div>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="https://github.com/greydotweb/grd">GitHub</a>
-            <span style="opacity:0.3;">© 2026</span>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 GreyDot Privacy Labs. Open Source Architecture.</p>
+        <div class="made-with-love">
+            Made with <i class="fa-solid fa-heart"></i> by Aryan
         </div>
-    </div>
-</div>
+    </footer>
+
+    <script>
+        function switchRepoTab(event, targetId) {
+            document.querySelectorAll('.tab-content-panel').forEach(panel => {
+                panel.style.display = 'none';
+            });
+            document.querySelectorAll('.tab-trigger').forEach(trigger => {
+                trigger.classList.remove('active');
+            });
+            document.getElementById(targetId).style.display = 'block';
+            event.currentTarget.classList.add('active');
+        }
+    </script>
 </body>
 </html>
